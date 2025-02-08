@@ -1,0 +1,14 @@
+# Maven target directory (for Maven projects)
+target/
+
+# Gradle build directories (for Gradle projects)
+build/
+out/
+
+# Ignore JAR and WAR files
+*.jar
+*.war
+*.ear
+
+# Ignore environment files
+.env

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="/profile.css" />
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1>Welcome, <span th:text="${user.username}"></span></h1>
+        </div>
+
+        <!-- Profile Image Section -->
+        <div class="image-section">
+            <img th:src="${profileImage != null and !profileImage.isEmpty()} ? ${profileImage} : 'https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0='"
+                alt="Profile Image">
+                <!-- <p>Image URL: <span th:text="${profileImage}"></span></p> -->
+            <p th:if="${profileImage == null or profileImage.isEmpty()}">No profile image available</p>
+        </div>
+
+        <!-- Profile Image Upload Form -->
+        <form th:action="@{'/api/profile/' + ${user.id} + '/updateProfileImage'}" method="post"
+            enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/jpeg, image/png" required>
+            <button type="submit" class="submit-button">Update Profile Picture</button>
+        </form>
+
+    </div>
+
+</body>
+
+</html>

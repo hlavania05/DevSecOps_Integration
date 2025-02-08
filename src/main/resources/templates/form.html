@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Enter Your Name</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Enter Your Name</h1>
+            <p>Please enter your name to proceed to your profile.</p>
+        </header>
+        
+        <form action="/home/saveUser" method="POST">
+            <div class="form-group">
+                <label for="username">Your Name:</label>
+                <input type="text" id="username" name="username" required />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="submit-button">Enter</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
