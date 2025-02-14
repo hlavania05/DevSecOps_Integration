@@ -16,9 +16,8 @@
 
         <!-- Profile Image Section -->
         <div class="image-section">
-            <img th:src="${profileImage != null and !profileImage.isEmpty()} ? ${profileImage} : 'https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0='"
-                alt="Profile Image">
-                <!-- <p>Image URL: <span th:text="${profileImage}"></span></p> -->
+            <img th:src="${profileImage}" alt="Profile Image">
+            <!-- <p>Image URL: <span th:text="${profileImage}"></span></p> -->
             <p th:if="${profileImage == null or profileImage.isEmpty()}">No profile image available</p>
         </div>
 
@@ -30,6 +29,34 @@
         </form>
 
     </div>
+    <script>
+        document.querySelector("form").addEventListener("submit", async function (event) {
+            event.preventDefault(); // Stop Form Submission
+
+            let formData = new FormData(this);
+            let userId = "[[${user.id}]]"; // Thymeleaf User ID
+
+            try {
+                let response = await fetch(`/api/profile/${userId}/updateProfileImage`, {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (response.ok) {
+                    alert("Profile updated successfully!"); // ✅ Success Pop-up
+                    location.reload(); // Page Refresh to Show New Image
+                } else if (response.status === 400) {
+                    alert("Invalid file type! Please upload JPEG or PNG."); // ❌ Invalid File
+                } else if (response.status === 404) {
+                    alert("User not found!"); // ❌ User Not Found
+                } else {
+                    alert("Something went wrong! Try again."); // ❌ Generic Error
+                }
+            } catch (error) {
+                alert("Error uploading image: " + error.message); // ❌ Network/Server Error
+            }
+        });
+    </script>
 
 </body>
 

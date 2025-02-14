@@ -23,13 +23,13 @@ public class UpdateProfile {
     private S3Service s3Service;
 
     @PostMapping("/{userId}/updateProfileImage")
-    public ResponseEntity<String> updateProfileImage(@PathVariable Long userId,
+    public ResponseEntity<Void> updateProfileImage(@PathVariable Long userId,
             @RequestParam("file") MultipartFile file) {
         try {
             // ✅ Validate File Type
             String contentType = file.getContentType();
             if (!("image/jpeg".equals(contentType) || "image/png".equals(contentType))) {
-                return ResponseEntity.badRequest().body("Only JPEG or PNG files are allowed.");
+                return ResponseEntity.badRequest().build(); // ❌ Invalid file type
             }
 
             // ✅ Upload to S3
@@ -39,17 +39,18 @@ public class UpdateProfile {
             Optional<User> userOptional = userRepository.findById(userId);
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
-                user.setProfileImage(fileKey); // Save only the S3 object key
+                user.setProfileImage(fileKey);
                 userRepository.save(user);
-                return ResponseEntity.ok("Profile pic updated successfully!!");
+                return ResponseEntity.ok().build(); // ✅ Success (No Message in Response)
             } else {
-                return ResponseEntity.badRequest().body("User not found.");
+                return ResponseEntity.notFound().build(); // ❌ User Not Found
             }
 
         } catch (IOException e) {
-            return ResponseEntity.internalServerError().body("Error uploading image: " + e.getMessage());
+            return ResponseEntity.internalServerError().build(); // ❌ Error Uploading
         }
     }
+
     // S3 Bucket Create krna and then usme Cors Permission set krna
 
 }
