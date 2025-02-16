@@ -70,7 +70,6 @@ public class S3Service {
 
         // ✅ Debugging Output
         System.out.println("Generated Pre-Signed URL: " + presignedRequest.url());
-
         return presignedRequest.url().toString();
     }
 }
