@@ -8,10 +8,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class App {
     public static void main(String[] args) {
         // Load environment variables before Spring starts
+        // Dotenv dotenv = Dotenv.configure()
+        //         .filename(".env")
+        //         .load();
+
         Dotenv dotenv = Dotenv.configure()
+                .directory("/home/ubuntu/JavaAPP")
                 .filename(".env")
                 .load();
-
                 
         System.setProperty("spring.datasource.url", dotenv.get("DB_URL"));
         System.setProperty("spring.datasource.username", dotenv.get("DB_USERNAME"));
