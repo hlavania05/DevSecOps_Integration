@@ -12,6 +12,7 @@ public class App {
         //         .filename(".env")
         //         .load();
 
+<<<<<<< HEAD
         // Dotenv dotenv = Dotenv.configure()
         //         .directory("/home/ubuntu/JavaAPP")
         //         .filename(".env")
@@ -22,6 +23,13 @@ public class App {
         //        .filename(".env")
         //        .load();
         Dotenv dotenv = Dotenv.configure().load();
+=======
+        Dotenv dotenv = Dotenv.configure()
+                .directory("/home/ubuntu/JavaAPP")
+                .filename(".env")
+                .load();
+                      
+>>>>>>> d026515 (modify app.java)
         System.setProperty("spring.datasource.url", dotenv.get("DB_URL"));
         System.setProperty("spring.datasource.username", dotenv.get("DB_USERNAME"));
         System.setProperty("spring.datasource.password", dotenv.get("DB_PASSWORD"));
