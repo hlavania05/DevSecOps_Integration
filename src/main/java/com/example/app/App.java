@@ -26,8 +26,6 @@ public class App {
         System.setProperty("aws.access-key", dotenv.get("AWS_ACCESS_KEY_ID"));
         System.setProperty("aws.secret-key", dotenv.get("AWS_SECRET_ACCESS_KEY"));
         System.setProperty("aws.region", dotenv.get("AWS_REGION"));
-        
-
         SpringApplication.run(App.class, args);
     }
 }
