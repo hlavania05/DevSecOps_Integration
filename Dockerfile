@@ -1,16 +1,20 @@
-# Step 1: Use OpenJDK base image
-FROM openjdk:17-jdk-slim
+# Step 1: Use official Maven image to build the app
+FROM maven:3.8.6-eclipse-temurin-17 AS build
 
-# Step 2: Set working directory
+# Create app directory
 WORKDIR /app
 
-# Step 4: Copy application JAR and .env file
-COPY target/javaAPP-1.0-SNAPSHOT.jar app.jar
-COPY .env .
+# Copy all project files
+COPY . .
 
-# Step 5: Expose the application port
-EXPOSE 8082
+# Step 2: Use a lightweight JDK image to run
+FROM eclipse-temurin:17-jdk-jammy
 
-# Step 6: Run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Create app directory
+WORKDIR /app
 
+# Copy the built jar file from previous stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Run the jar file
+CMD ["java", "-jar", "app.jar"]
